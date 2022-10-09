@@ -26,10 +26,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/images', uploads.single('image'), async (req, res) => {
-  if (!req.file) return res.status.(400).json({ msg: 'no file uploaded! ' })
+  if (!req.file) return res.status(400).json({ msg: 'no file uploaded! ' })
   const cloudImageData = await cloudinary.uploader.upload(req.file.path)
   console.log(cloudImageData)
-  const cloudinaryUrl = `https://res.cloudinary.com/dkchpbore/image/upload/v1593119998/${cloudImageData.public_id}.png`
+  const cloudinaryUrl = cloudImageData.url
   // remove the file after finishing up with it
   unlinkSync(req.file.path)
   res.json({ cloudinaryUrl })
